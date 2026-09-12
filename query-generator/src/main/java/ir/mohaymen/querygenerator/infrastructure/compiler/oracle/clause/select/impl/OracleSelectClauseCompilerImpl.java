@@ -1,6 +1,7 @@
-package ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.select;
+package ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.select.impl;
 
 import ir.mohaymen.querygenerator.application.query.generate.common.model.QueryContext;
+import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.select.OracleSelectClauseCompiler;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.select.common.services.projection.compiler.OracleProjectionCompiler;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.select.common.services.projection.compiler.OracleProjectionCompilerImpl;
 

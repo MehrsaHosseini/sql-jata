@@ -3,7 +3,7 @@ package ir.mohaymen.querygenerator.infrastructure.compiler.oracle;
 import ir.mohaymen.querygenerator.application.query.generate.common.model.QueryContext;
 import ir.mohaymen.querygenerator.infrastructure.compiler.QueryCompiler;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.select.OracleSelectClauseCompiler;
-import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.select.OracleSelectClauseCompilerImpl;
+import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.select.impl.OracleSelectClauseCompilerImpl;
 
 import java.util.Objects;
 
