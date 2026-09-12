@@ -1,13 +1,13 @@
-package ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.select.common.identifier;
+package ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.identifier;
 
 import java.util.StringJoiner;
 
 public class OracleIdentifierQuoterImpl implements OracleIdentifierQuoter {
 
-    private static final String QUOTE = "\"";
-    private static final String WILDCARD = "*";
-    private static final String QUALIFIER_SEPARATOR = ".";
-    private static final String QUALIFIER_PATTERN = "\\.";
+    private final String QUOTE = "\"";
+    private final String WILDCARD = "*";
+    private final String QUALIFIER_SEPARATOR = ".";
+    private final String QUALIFIER_PATTERN = "\\.";
 
     @Override
     public String quoteQualified(String qualifiedIdentifier) {
@@ -41,7 +41,7 @@ public class OracleIdentifierQuoterImpl implements OracleIdentifierQuoter {
         return QUOTE + bareIdentifier + QUOTE;
     }
 
-    private static String unquote(String identifier) {
+    private String unquote(String identifier) {
         if (identifier.length() > 1 && identifier.startsWith(QUOTE) && identifier.endsWith(QUOTE)) {
             return identifier.substring(1, identifier.length() - 1);
         }

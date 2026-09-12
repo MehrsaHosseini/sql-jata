@@ -1,4 +1,4 @@
-package ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.select.common.identifier;
+package ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.identifier;
 
 public interface OracleIdentifierQuoter {
 

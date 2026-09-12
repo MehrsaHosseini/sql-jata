@@ -3,14 +3,14 @@ package ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.select.
 import ir.mohaymen.querygenerator.domain.schema.column.Column;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.select.common.formatter.provider.OracleDisplayFormatterProvider;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.select.common.formatter.provider.impl.OracleDisplayFormatterProviderImpl;
-import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.select.common.identifier.OracleIdentifierQuoter;
-import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.select.common.identifier.OracleIdentifierQuoterImpl;
+import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.identifier.OracleIdentifierQuoter;
+import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.identifier.OracleIdentifierQuoterImpl;
 
 import java.util.Objects;
 
 public class OracleSelectItemCompilerImpl implements OracleSelectItemCompiler {
 
-    private static final String ALIAS_KEYWORD = " AS ";
+    private final String ALIAS_KEYWORD = " AS ";
 
     private final OracleIdentifierQuoter identifierQuoter;
     private final OracleDisplayFormatterProvider displayFormattingCompiler;
