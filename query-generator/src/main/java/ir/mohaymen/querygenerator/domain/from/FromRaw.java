@@ -1,4 +1,5 @@
 package ir.mohaymen.querygenerator.domain.from;
 
-public record FromRaw() implements From {
+public final class FromRaw implements From {
+    private String raw;
 }

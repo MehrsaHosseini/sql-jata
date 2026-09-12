@@ -2,5 +2,9 @@ package ir.mohaymen.querygenerator.domain.schema.column;
 
 import ir.mohaymen.querygenerator.domain.schema.enumeration.DisplayFormatting;
 
-public record Column(String columnName, DisplayFormatting displayFormatting) {
+public class Column {
+    private String columnName;
+    private String columnAlias;
+    private DisplayFormatting displayFormatting;
+
 }
