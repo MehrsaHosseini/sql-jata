@@ -1,4 +1,4 @@
 package ir.mohaymen.querygenerator.domain.where;
 
-public sealed interface Where permits BasicWhere, MultipleWhere, WhereExists, WhereNull, WhereRaw, WhereTrue {
+public sealed interface Where permits BasicWhere, MultipleWhere, WhereDatePart, WhereExists, WhereNull, WhereRaw, WhereTrue {
 }

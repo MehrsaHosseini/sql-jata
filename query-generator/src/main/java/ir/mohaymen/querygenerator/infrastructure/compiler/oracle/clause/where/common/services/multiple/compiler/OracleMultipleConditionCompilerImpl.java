@@ -9,14 +9,17 @@ import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+/**
+ * Joins the members of each operand with AND and the two operands with OR. An operand may be left
+ * out to get a condition of AND alone, and a member may itself be a {@link MultipleWhere}, which is
+ * what makes arbitrarily nested AND and OR possible.
+ */
 public class OracleMultipleConditionCompilerImpl implements OracleMultipleConditionCompiler {
 
-    private final String AND_SEPARATOR = " AND ";
-    private final String OR_SEPARATOR = " OR ";
-    private final String GROUP_PREFIX = "(";
-    private final String GROUP_SUFFIX = ")";
-    private final String LEFT_OPERAND = "left";
-    private final String RIGHT_OPERAND = "right";
+    private static final String AND_SEPARATOR = " AND ";
+    private static final String OR_SEPARATOR = " OR ";
+    private static final String GROUP_PREFIX = "(";
+    private static final String GROUP_SUFFIX = ")";
 
     @Override
     public String compile(MultipleWhere multipleWhere,
@@ -27,19 +30,25 @@ public class OracleMultipleConditionCompilerImpl implements OracleMultipleCondit
         }
         Objects.requireNonNull(conditionCompiler, "condition compiler must not be null");
 
-        return compileOperand(multipleWhere.leftOperand(), LEFT_OPERAND, conditionCompiler, parameterBinder)
+        List<Where> leftOperand = multipleWhere.leftOperand();
+        List<Where> rightOperand = multipleWhere.rightOperand();
+        if (isAbsent(leftOperand) && isAbsent(rightOperand)) {
+            throw new IllegalArgumentException("a multiple condition needs at least one operand");
+        }
+        if (isAbsent(rightOperand)) {
+            return compileOperand(leftOperand, conditionCompiler, parameterBinder);
+        }
+        if (isAbsent(leftOperand)) {
+            return compileOperand(rightOperand, conditionCompiler, parameterBinder);
+        }
+        return compileOperand(leftOperand, conditionCompiler, parameterBinder)
                 + OR_SEPARATOR
-                + compileOperand(multipleWhere.rightOperand(), RIGHT_OPERAND, conditionCompiler, parameterBinder);
+                + compileOperand(rightOperand, conditionCompiler, parameterBinder);
     }
 
-    private String compileOperand(List<Where> operand,
-                                         String operandName,
+    private static String compileOperand(List<Where> operand,
                                          OracleConditionCompiler conditionCompiler,
                                          OracleParameterBinder parameterBinder) {
-        if (operand == null || operand.isEmpty()) {
-            throw new IllegalArgumentException("the " + operandName + " operand of a multiple condition must not be null or empty");
-        }
-
         boolean joinedByAnd = operand.size() > 1;
         StringJoiner conditions = new StringJoiner(AND_SEPARATOR, GROUP_PREFIX, GROUP_SUFFIX);
         for (Where condition : operand) {
@@ -48,14 +57,28 @@ public class OracleMultipleConditionCompilerImpl implements OracleMultipleCondit
         return conditions.toString();
     }
 
-    private String compileMember(Where condition,
+    /**
+     * A nested OR only needs its own parentheses next to an AND, otherwise the parentheses of the
+     * enclosing operand already isolate it.
+     */
+    private static String compileMember(Where condition,
                                         boolean joinedByAnd,
                                         OracleConditionCompiler conditionCompiler,
                                         OracleParameterBinder parameterBinder) {
         String compiled = conditionCompiler.compile(condition, parameterBinder);
-        return joinedByAnd && condition instanceof MultipleWhere
+        return joinedByAnd && producesOr(condition)
                 ? GROUP_PREFIX + compiled + GROUP_SUFFIX
                 : compiled;
+    }
+
+    private static boolean producesOr(Where condition) {
+        return condition instanceof MultipleWhere multipleWhere
+                && !isAbsent(multipleWhere.leftOperand())
+                && !isAbsent(multipleWhere.rightOperand());
+    }
+
+    private static boolean isAbsent(List<Where> operand) {
+        return operand == null || operand.isEmpty();
     }
 
 }

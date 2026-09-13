@@ -3,12 +3,15 @@ package ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.where.c
 import ir.mohaymen.querygenerator.domain.where.BasicWhere;
 import ir.mohaymen.querygenerator.domain.where.MultipleWhere;
 import ir.mohaymen.querygenerator.domain.where.Where;
+import ir.mohaymen.querygenerator.domain.where.WhereDatePart;
 import ir.mohaymen.querygenerator.domain.where.WhereExists;
 import ir.mohaymen.querygenerator.domain.where.WhereNull;
 import ir.mohaymen.querygenerator.domain.where.WhereRaw;
 import ir.mohaymen.querygenerator.domain.where.WhereTrue;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.where.common.services.basic.compiler.OracleBasicConditionCompiler;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.where.common.services.basic.compiler.OracleBasicConditionCompilerImpl;
+import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.where.common.services.datepart.compiler.OracleDatePartConditionCompiler;
+import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.where.common.services.datepart.compiler.OracleDatePartConditionCompilerImpl;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.where.common.services.exists.compiler.OracleExistsConditionCompiler;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.where.common.services.exists.compiler.OracleExistsConditionCompilerImpl;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.where.common.services.multiple.compiler.OracleMultipleConditionCompiler;
@@ -24,6 +27,7 @@ import java.util.Objects;
 public class OracleConditionCompilerImpl implements OracleConditionCompiler {
 
     private final OracleBasicConditionCompiler basicConditionCompiler;
+    private final OracleDatePartConditionCompiler datePartConditionCompiler;
     private final OracleNullConditionCompiler nullConditionCompiler;
     private final OracleTrueConditionCompiler trueConditionCompiler;
     private final OracleExistsConditionCompiler existsConditionCompiler;
@@ -31,6 +35,7 @@ public class OracleConditionCompilerImpl implements OracleConditionCompiler {
 
     public OracleConditionCompilerImpl() {
         this(new OracleBasicConditionCompilerImpl(),
+                new OracleDatePartConditionCompilerImpl(),
                 new OracleNullConditionCompilerImpl(),
                 new OracleTrueConditionCompilerImpl(),
                 new OracleExistsConditionCompilerImpl(),
@@ -38,11 +43,13 @@ public class OracleConditionCompilerImpl implements OracleConditionCompiler {
     }
 
     public OracleConditionCompilerImpl(OracleBasicConditionCompiler basicConditionCompiler,
+                                       OracleDatePartConditionCompiler datePartConditionCompiler,
                                        OracleNullConditionCompiler nullConditionCompiler,
                                        OracleTrueConditionCompiler trueConditionCompiler,
                                        OracleExistsConditionCompiler existsConditionCompiler,
                                        OracleMultipleConditionCompiler multipleConditionCompiler) {
         this.basicConditionCompiler = Objects.requireNonNull(basicConditionCompiler, "basic condition compiler must not be null");
+        this.datePartConditionCompiler = Objects.requireNonNull(datePartConditionCompiler, "date part condition compiler must not be null");
         this.nullConditionCompiler = Objects.requireNonNull(nullConditionCompiler, "null condition compiler must not be null");
         this.trueConditionCompiler = Objects.requireNonNull(trueConditionCompiler, "true condition compiler must not be null");
         this.existsConditionCompiler = Objects.requireNonNull(existsConditionCompiler, "exists condition compiler must not be null");
@@ -57,6 +64,7 @@ public class OracleConditionCompilerImpl implements OracleConditionCompiler {
             case null -> throw new IllegalArgumentException("condition must not be null");
             case WhereRaw whereRaw -> compileRaw(whereRaw.raw());
             case BasicWhere basicWhere -> basicConditionCompiler.compile(basicWhere, parameterBinder);
+            case WhereDatePart whereDatePart -> datePartConditionCompiler.compile(whereDatePart, parameterBinder);
             case WhereNull whereNull -> nullConditionCompiler.compile(whereNull);
             case WhereTrue whereTrue -> trueConditionCompiler.compile(whereTrue);
             case WhereExists whereExists -> existsConditionCompiler.compile(whereExists, this, parameterBinder);
