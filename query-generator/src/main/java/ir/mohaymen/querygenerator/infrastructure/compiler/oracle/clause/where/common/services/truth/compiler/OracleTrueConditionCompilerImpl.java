@@ -28,7 +28,7 @@ public class OracleTrueConditionCompilerImpl implements OracleTrueConditionCompi
         }
 
         String column = columnReferenceCompiler.compile(whereTrue.column());
-        return column + (Boolean.TRUE.equals(whereTrue.negative()) ? IS_FALSE : IS_TRUE);
+        return column + (Boolean.FALSE.equals(whereTrue.isTrue()) ? IS_FALSE : IS_TRUE);
     }
 
 }

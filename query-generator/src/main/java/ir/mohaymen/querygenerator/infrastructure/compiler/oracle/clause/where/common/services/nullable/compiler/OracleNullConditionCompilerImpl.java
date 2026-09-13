@@ -28,7 +28,7 @@ public class OracleNullConditionCompilerImpl implements OracleNullConditionCompi
         }
 
         String column = columnReferenceCompiler.compile(whereNull.column());
-        return column + (Boolean.TRUE.equals(whereNull.negative()) ? IS_NOT_NULL : IS_NULL);
+        return column + (Boolean.FALSE.equals(whereNull.isNull()) ? IS_NOT_NULL : IS_NULL);
     }
 
 }
