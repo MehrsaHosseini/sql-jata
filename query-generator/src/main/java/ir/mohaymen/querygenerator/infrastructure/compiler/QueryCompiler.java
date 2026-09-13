@@ -6,4 +6,5 @@ public interface QueryCompiler {
     QueryContext generateSelect(QueryContext context);
     QueryContext generateFrom(QueryContext context);
     QueryContext generateWhere(QueryContext context);
+    QueryContext generatePagination(QueryContext context);
 }
