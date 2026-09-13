@@ -2,7 +2,5 @@ package ir.mohaymen.querygenerator.domain.where;
 
 import java.util.List;
 
-public class MultipleWhere {
-    private List<Where> leftOperand;
-    private List<Where> rightOperand;
+public record MultipleWhere(List<Where> leftOperand, List<Where> rightOperand) implements Where {
 }

@@ -1,4 +1,4 @@
-package ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.from.common.services.table.compiler;
+package ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.table;
 
 import ir.mohaymen.querygenerator.domain.schema.table.Table;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.identifier.OracleIdentifierQuoter;
@@ -6,25 +6,25 @@ import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.identifi
 
 import java.util.Objects;
 
-public class OracleFromTableCompilerImpl implements OracleFromTableCompiler {
+public class OracleTableReferenceCompilerImpl implements OracleTableReferenceCompiler {
 
     private final String ALIAS_SEPARATOR = " ";
     private final String WILDCARD = "*";
 
     private final OracleIdentifierQuoter identifierQuoter;
 
-    public OracleFromTableCompilerImpl() {
+    public OracleTableReferenceCompilerImpl() {
         this(new OracleIdentifierQuoterImpl());
     }
 
-    public OracleFromTableCompilerImpl(OracleIdentifierQuoter identifierQuoter) {
+    public OracleTableReferenceCompilerImpl(OracleIdentifierQuoter identifierQuoter) {
         this.identifierQuoter = Objects.requireNonNull(identifierQuoter, "identifier quoter must not be null");
     }
 
     @Override
     public String compile(Table table) {
         if (table == null) {
-            throw new IllegalArgumentException("from table must not be null");
+            throw new IllegalArgumentException("table must not be null");
         }
 
         String reference = requireNoWildcard(identifierQuoter.quoteQualified(table.tableName()), table.tableName());
@@ -38,7 +38,7 @@ public class OracleFromTableCompilerImpl implements OracleFromTableCompiler {
 
     private String requireNoWildcard(String quotedIdentifier, String identifier) {
         if (quotedIdentifier.contains(WILDCARD)) {
-            throw new IllegalArgumentException("from table identifier must not contain a wildcard: " + identifier);
+            throw new IllegalArgumentException("table identifier must not contain a wildcard: " + identifier);
         }
         return quotedIdentifier;
     }

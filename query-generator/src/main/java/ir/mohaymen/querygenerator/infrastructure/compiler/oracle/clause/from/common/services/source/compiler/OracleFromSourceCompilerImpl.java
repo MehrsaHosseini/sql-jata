@@ -3,8 +3,8 @@ package ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.from.co
 import ir.mohaymen.querygenerator.domain.from.From;
 import ir.mohaymen.querygenerator.domain.from.FromRaw;
 import ir.mohaymen.querygenerator.domain.from.FromTable;
-import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.from.common.services.table.compiler.OracleFromTableCompiler;
-import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.from.common.services.table.compiler.OracleFromTableCompilerImpl;
+import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.table.OracleTableReferenceCompiler;
+import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.table.OracleTableReferenceCompilerImpl;
 
 import java.util.Objects;
 
@@ -12,14 +12,14 @@ public class OracleFromSourceCompilerImpl implements OracleFromSourceCompiler {
 
     private final String DUAL_TABLE = "DUAL";
 
-    private final OracleFromTableCompiler fromTableCompiler;
+    private final OracleTableReferenceCompiler tableReferenceCompiler;
 
     public OracleFromSourceCompilerImpl() {
-        this(new OracleFromTableCompilerImpl());
+        this(new OracleTableReferenceCompilerImpl());
     }
 
-    public OracleFromSourceCompilerImpl(OracleFromTableCompiler fromTableCompiler) {
-        this.fromTableCompiler = Objects.requireNonNull(fromTableCompiler, "from table compiler must not be null");
+    public OracleFromSourceCompilerImpl(OracleTableReferenceCompiler tableReferenceCompiler) {
+        this.tableReferenceCompiler = Objects.requireNonNull(tableReferenceCompiler, "table reference compiler must not be null");
     }
 
     @Override
@@ -27,7 +27,7 @@ public class OracleFromSourceCompilerImpl implements OracleFromSourceCompiler {
         return switch (from) {
             case null -> DUAL_TABLE;
             case FromRaw fromRaw -> compileRaw(fromRaw.raw());
-            case FromTable fromTable -> fromTableCompiler.compile(fromTable.table());
+            case FromTable fromTable -> tableReferenceCompiler.compile(fromTable.table());
         };
     }
 

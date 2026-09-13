@@ -1,5 +1,4 @@
 package ir.mohaymen.querygenerator.domain.where;
 
-public final class WhereRaw implements Where {
-    private String raw;
+public record WhereRaw(String raw) implements Where {
 }
