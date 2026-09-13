@@ -19,6 +19,7 @@ public class OracleValueCompilerImpl implements OracleValueCompiler {
     private final String LIST_SUFFIX = ")";
     private final String LIST_SEPARATOR = ", ";
     private final String RANGE_SEPARATOR = " AND ";
+    private final String NULL_LITERAL = "NULL";
     private final int RANGE_SIZE = 2;
 
     private final OracleColumnReferenceCompiler columnReferenceCompiler;
@@ -65,6 +66,27 @@ public class OracleValueCompilerImpl implements OracleValueCompiler {
                 + compileElement(values.getLast(), parameterBinder);
     }
 
+    @Override
+    public String compileNullable(Object value, OracleParameterBinder parameterBinder) {
+        Objects.requireNonNull(parameterBinder, "parameter binder must not be null");
+
+        Optional<List<Object>> elements = asElements(value);
+        if (elements.isEmpty()) {
+            return compileNullableElement(value, parameterBinder);
+        }
+
+        List<Object> values = elements.get();
+        if (values.isEmpty()) {
+            throw new IllegalArgumentException("a value list must not be empty");
+        }
+
+        StringJoiner list = new StringJoiner(LIST_SEPARATOR, LIST_PREFIX, LIST_SUFFIX);
+        for (Object element : values) {
+            list.add(compileNullableElement(element, parameterBinder));
+        }
+        return list.toString();
+    }
+
     private String compileElement(Object value, OracleParameterBinder parameterBinder) {
         if (value == null) {
             throw new IllegalArgumentException("condition value must not be null, use a null condition instead");
@@ -73,6 +95,13 @@ public class OracleValueCompilerImpl implements OracleValueCompiler {
             return columnReferenceCompiler.compile(column);
         }
         return parameterBinder.bind(value);
+    }
+
+    private String compileNullableElement(Object value, OracleParameterBinder parameterBinder) {
+        if (value == null) {
+            return NULL_LITERAL;
+        }
+        return compileElement(value, parameterBinder);
     }
 
     private Optional<List<Object>> asElements(Object value) {

@@ -1,4 +1,6 @@
 package ir.mohaymen.querygenerator.domain.delete;
 
-public record DeleteAll() implements Delete {
+import ir.mohaymen.querygenerator.domain.schema.table.Table;
+
+public record DeleteAll(Table table) implements Delete {
 }

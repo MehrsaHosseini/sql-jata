@@ -1,19 +1,26 @@
 package ir.mohaymen.querygenerator.application.query.generate.common.model;
 
+import ir.mohaymen.querygenerator.domain.delete.Delete;
 import ir.mohaymen.querygenerator.domain.from.From;
 import ir.mohaymen.querygenerator.domain.group.GroupBy;
 import ir.mohaymen.querygenerator.domain.having.Having;
+import ir.mohaymen.querygenerator.domain.insert.Insert;
+import ir.mohaymen.querygenerator.domain.intersect.Intersect;
 import ir.mohaymen.querygenerator.domain.join.Join;
 import ir.mohaymen.querygenerator.domain.limit_offset.Pagination;
+import ir.mohaymen.querygenerator.domain.minus.Minus;
 import ir.mohaymen.querygenerator.domain.order.OrderBy;
 import ir.mohaymen.querygenerator.domain.select.Select;
+import ir.mohaymen.querygenerator.domain.union.Union;
+import ir.mohaymen.querygenerator.domain.update.Update;
 import ir.mohaymen.querygenerator.domain.where.Where;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public record QueryContext(Select select, From from, Join join, Where where, GroupBy groupBy, Having having,
-                           OrderBy orderBy, Pagination pagination, StringBuilder query, List<Object> parameters) {
+                           OrderBy orderBy, Pagination pagination, Insert insert, Update update, Delete delete,
+                           Union union, Intersect intersect, Minus minus, StringBuilder query, List<Object> parameters) {
 
     public QueryContext(Select select, From from, Where where) {
         this(select, from, where, null);
@@ -34,7 +41,40 @@ public record QueryContext(Select select, From from, Join join, Where where, Gro
 
     public QueryContext(Select select, From from, Join join, Where where, GroupBy groupBy, Having having,
                         OrderBy orderBy, Pagination pagination) {
-        this(select, from, join, where, groupBy, having, orderBy, pagination, new StringBuilder(), new ArrayList<>());
+        this(select, from, join, where, groupBy, having, orderBy, pagination, null, null, null);
+    }
+
+    public QueryContext(Insert insert) {
+        this(null, null, null, null, null, null, null, null, insert, null, null);
+    }
+
+    public QueryContext(Update update) {
+        this(update, null);
+    }
+
+    public QueryContext(Update update, Where where) {
+        this(null, null, null, where, null, null, null, null, null, update, null);
+    }
+
+    public QueryContext(Delete delete) {
+        this(delete, null);
+    }
+
+    public QueryContext(Delete delete, Where where) {
+        this(null, null, null, where, null, null, null, null, null, null, delete);
+    }
+
+    public QueryContext(Select select, From from, Join join, Where where, GroupBy groupBy, Having having,
+                        OrderBy orderBy, Pagination pagination, Insert insert, Update update, Delete delete) {
+        this(select, from, join, where, groupBy, having, orderBy, pagination, insert, update, delete,
+                null, null, null);
+    }
+
+    public QueryContext(Select select, From from, Join join, Where where, GroupBy groupBy, Having having,
+                        OrderBy orderBy, Pagination pagination, Insert insert, Update update, Delete delete,
+                        Union union, Intersect intersect, Minus minus) {
+        this(select, from, join, where, groupBy, having, orderBy, pagination, insert, update, delete,
+                union, intersect, minus, new StringBuilder(), new ArrayList<>());
     }
 
 }

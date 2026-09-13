@@ -9,6 +9,12 @@ public interface QueryCompiler {
     QueryContext generateWhere(QueryContext context);
     QueryContext generateGroupBy(QueryContext context);
     QueryContext generateHaving(QueryContext context);
+    QueryContext generateUnion(QueryContext context);
+    QueryContext generateIntersect(QueryContext context);
+    QueryContext generateMinus(QueryContext context);
     QueryContext generateOrderBy(QueryContext context);
     QueryContext generatePagination(QueryContext context);
+    QueryContext generateInsert(QueryContext context);
+    QueryContext generateUpdate(QueryContext context);
+    QueryContext generateDelete(QueryContext context);
 }

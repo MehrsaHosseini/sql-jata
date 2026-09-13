@@ -1,4 +1,6 @@
 package ir.mohaymen.querygenerator.domain.insert;
 
-public record InsertAll() implements Insert {
+import java.util.List;
+
+public record InsertAll(List<InsertSingleRow> insertList) implements Insert {
 }

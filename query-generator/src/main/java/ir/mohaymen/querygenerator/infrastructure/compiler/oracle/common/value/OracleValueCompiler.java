@@ -8,4 +8,6 @@ public interface OracleValueCompiler {
 
     String compileRange(Object value, OracleParameterBinder parameterBinder);
 
+    String compileNullable(Object value, OracleParameterBinder parameterBinder);
+
 }
