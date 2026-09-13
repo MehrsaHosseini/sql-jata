@@ -1,7 +1,7 @@
-package ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.where.common.services.predicate.compiler;
+package ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.predicate;
 
-import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.where.common.services.value.compiler.OracleValueCompiler;
-import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.where.common.services.value.compiler.OracleValueCompilerImpl;
+import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.value.OracleValueCompiler;
+import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.value.OracleValueCompilerImpl;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.parameter.OracleParameterBinder;
 
 import java.util.Locale;
@@ -10,9 +10,9 @@ import java.util.Set;
 
 public class OraclePredicateCompilerImpl implements OraclePredicateCompiler {
 
-    private static final String OPERAND_SEPARATOR = " ";
-    private static final String WHITESPACE_PATTERN = "\\s+";
-    private static final Set<String> RANGE_OPERATIONS = Set.of("BETWEEN", "NOT BETWEEN");
+    private final String OPERAND_SEPARATOR = " ";
+    private final String WHITESPACE_PATTERN = "\\s+";
+    private final Set<String> RANGE_OPERATIONS = Set.of("BETWEEN", "NOT BETWEEN");
 
     private final OracleValueCompiler valueCompiler;
 
@@ -36,17 +36,15 @@ public class OraclePredicateCompilerImpl implements OraclePredicateCompiler {
         return expression + OPERAND_SEPARATOR + requiredOperation + OPERAND_SEPARATOR + compiledValue;
     }
 
-    private static String requireOperation(String operation) {
+    private String requireOperation(String operation) {
         if (operation == null || operation.isBlank()) {
             throw new IllegalArgumentException("condition operation must not be null or blank");
         }
         return operation.trim();
     }
 
-    /**
-     * A range takes two values separated by AND instead of a single value or a value list.
-     */
-    private static boolean isRange(String operation) {
+
+    private boolean isRange(String operation) {
         return RANGE_OPERATIONS.contains(operation.toUpperCase(Locale.ROOT).replaceAll(WHITESPACE_PATTERN, OPERAND_SEPARATOR));
     }
 

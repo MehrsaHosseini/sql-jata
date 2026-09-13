@@ -1,4 +1,4 @@
-package ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.where.common.services.value.compiler;
+package ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.value;
 
 import ir.mohaymen.querygenerator.domain.schema.column.Column;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.column.OracleColumnReferenceCompiler;

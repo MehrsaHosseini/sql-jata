@@ -1,8 +1,8 @@
 package ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.where.common.services.basic.compiler;
 
 import ir.mohaymen.querygenerator.domain.where.BasicWhere;
-import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.where.common.services.predicate.compiler.OraclePredicateCompiler;
-import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.where.common.services.predicate.compiler.OraclePredicateCompilerImpl;
+import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.predicate.OraclePredicateCompiler;
+import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.predicate.OraclePredicateCompilerImpl;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.column.OracleColumnReferenceCompiler;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.column.OracleColumnReferenceCompilerImpl;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.parameter.OracleParameterBinder;

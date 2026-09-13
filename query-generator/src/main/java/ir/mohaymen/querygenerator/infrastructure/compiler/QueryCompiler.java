@@ -8,6 +8,7 @@ public interface QueryCompiler {
     QueryContext generateJoin(QueryContext context);
     QueryContext generateWhere(QueryContext context);
     QueryContext generateGroupBy(QueryContext context);
+    QueryContext generateHaving(QueryContext context);
     QueryContext generateOrderBy(QueryContext context);
     QueryContext generatePagination(QueryContext context);
 }

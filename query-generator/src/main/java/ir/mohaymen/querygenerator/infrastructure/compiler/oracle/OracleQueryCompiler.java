@@ -6,6 +6,8 @@ import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.from.Ora
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.from.impl.OracleFromClauseCompilerImpl;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.group_by.OracleGroupByClauseCompiler;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.group_by.impl.OracleGroupByClauseCompilerImpl;
+import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.having.OracleHavingClauseCompiler;
+import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.having.impl.OracleHavingClauseCompilerImpl;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.join.OracleJoinClauseCompiler;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.join.impl.OracleJoinClauseCompilerImpl;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.order_by.OracleOrderByClauseCompiler;
@@ -26,6 +28,7 @@ public class OracleQueryCompiler implements QueryCompiler {
     private final OracleJoinClauseCompiler joinClauseCompiler;
     private final OracleWhereClauseCompiler whereClauseCompiler;
     private final OracleGroupByClauseCompiler groupByClauseCompiler;
+    private final OracleHavingClauseCompiler havingClauseCompiler;
     private final OracleOrderByClauseCompiler orderByClauseCompiler;
     private final OraclePaginationClauseCompiler paginationClauseCompiler;
 
@@ -35,6 +38,7 @@ public class OracleQueryCompiler implements QueryCompiler {
                 new OracleJoinClauseCompilerImpl(),
                 new OracleWhereClauseCompilerImpl(),
                 new OracleGroupByClauseCompilerImpl(),
+                new OracleHavingClauseCompilerImpl(),
                 new OracleOrderByClauseCompilerImpl(),
                 new OraclePaginationClauseCompilerImpl());
     }
@@ -44,6 +48,7 @@ public class OracleQueryCompiler implements QueryCompiler {
                                OracleJoinClauseCompiler joinClauseCompiler,
                                OracleWhereClauseCompiler whereClauseCompiler,
                                OracleGroupByClauseCompiler groupByClauseCompiler,
+                               OracleHavingClauseCompiler havingClauseCompiler,
                                OracleOrderByClauseCompiler orderByClauseCompiler,
                                OraclePaginationClauseCompiler paginationClauseCompiler) {
         this.selectClauseCompiler = Objects.requireNonNull(selectClauseCompiler, "select clause compiler must not be null");
@@ -51,6 +56,7 @@ public class OracleQueryCompiler implements QueryCompiler {
         this.joinClauseCompiler = Objects.requireNonNull(joinClauseCompiler, "join clause compiler must not be null");
         this.whereClauseCompiler = Objects.requireNonNull(whereClauseCompiler, "where clause compiler must not be null");
         this.groupByClauseCompiler = Objects.requireNonNull(groupByClauseCompiler, "group by clause compiler must not be null");
+        this.havingClauseCompiler = Objects.requireNonNull(havingClauseCompiler, "having clause compiler must not be null");
         this.orderByClauseCompiler = Objects.requireNonNull(orderByClauseCompiler, "order by clause compiler must not be null");
         this.paginationClauseCompiler = Objects.requireNonNull(paginationClauseCompiler, "pagination clause compiler must not be null");
     }
@@ -78,6 +84,11 @@ public class OracleQueryCompiler implements QueryCompiler {
     @Override
     public QueryContext generateGroupBy(QueryContext context) {
         return groupByClauseCompiler.generateGroupByClause(context);
+    }
+
+    @Override
+    public QueryContext generateHaving(QueryContext context) {
+        return havingClauseCompiler.generateHavingClause(context);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.where.common.services.predicate.compiler;
+package ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.predicate;
 
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.parameter.OracleParameterBinder;
 
