@@ -9,11 +9,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-/**
- * Joins the members of each operand with AND and the two operands with OR. An operand may be left
- * out to get a condition of AND alone, and a member may itself be a {@link MultipleWhere}, which is
- * what makes arbitrarily nested AND and OR possible.
- */
 public class OracleMultipleConditionCompilerImpl implements OracleMultipleConditionCompiler {
 
     private static final String AND_SEPARATOR = " AND ";
@@ -57,10 +52,7 @@ public class OracleMultipleConditionCompilerImpl implements OracleMultipleCondit
         return conditions.toString();
     }
 
-    /**
-     * A nested OR only needs its own parentheses next to an AND, otherwise the parentheses of the
-     * enclosing operand already isolate it.
-     */
+
     private static String compileMember(Where condition,
                                         boolean joinedByAnd,
                                         OracleConditionCompiler conditionCompiler,

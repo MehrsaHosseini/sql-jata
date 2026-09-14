@@ -38,9 +38,7 @@ public class OracleJoinSourceCompilerImpl implements OracleJoinSourceCompiler {
         };
     }
 
-    /**
-     * Joins are chained by whitespace only, because every join already carries its own keyword.
-     */
+
     private String compileList(List<Join> joins, OracleParameterBinder parameterBinder) {
         if (joins == null || joins.isEmpty()) {
             return EMPTY_CLAUSE;

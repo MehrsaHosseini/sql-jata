@@ -1,9 +1,6 @@
 package ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.join.common.model;
 
-/**
- * Oracle rendering rules of a single join type, where a cross join is the only one that is written
- * without an on condition.
- */
+
 public record OracleJoinSyntax(String keyword, boolean supportsCondition) {
 
     public OracleJoinSyntax {
