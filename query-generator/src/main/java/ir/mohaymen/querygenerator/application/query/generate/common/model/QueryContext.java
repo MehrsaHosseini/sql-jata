@@ -114,4 +114,9 @@ public record QueryContext(Select select, From from, Join join, Where where, Gro
         NamedParameters.putAll(parameters, namedParameters);
         return this;
     }
+
+    public QueryContext asSelectBody(StringBuilder query, Map<String, Object> parameters, ParameterMode parameterMode) {
+        return new QueryContext(select, from, join, where, groupBy, having, null, null,
+                null, null, null, null, null, null, query, parameters, parameterMode);
+    }
 }

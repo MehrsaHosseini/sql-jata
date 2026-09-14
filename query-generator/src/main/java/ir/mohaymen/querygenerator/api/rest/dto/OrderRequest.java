@@ -1,0 +1,10 @@
+package ir.mohaymen.querygenerator.api.rest.dto;
+
+import ir.mohaymen.querygenerator.domain.schema.enumeration.SortDirection;
+
+public record OrderRequest(String column, SortDirection direction) {
+
+    public OrderRequest(String column) {
+        this(column, null);
+    }
+}
