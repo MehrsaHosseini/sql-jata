@@ -1,6 +1,7 @@
 package ir.mohaymen.querygenerator.api.rest;
 
-import ir.mohaymen.querygenerator.api.rest.config.QueryGeneratorConfiguration;
+import ir.mohaymen.querygenerator.infrastructure.config.QueryGeneratorConfiguration;
+import ir.mohaymen.querygenerator.infrastructure.handlers.QueryGeneratorExceptionHandler;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;

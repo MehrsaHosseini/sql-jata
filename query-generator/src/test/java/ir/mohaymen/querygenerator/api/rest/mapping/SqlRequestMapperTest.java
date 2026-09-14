@@ -1,23 +1,24 @@
 package ir.mohaymen.querygenerator.api.rest.mapping;
 
-import ir.mohaymen.querygenerator.api.rest.dto.RawSqlRequest;
+import ir.mohaymen.querygenerator.api.rest.common.dto.RawSqlRequest;
+import ir.mohaymen.querygenerator.api.rest.common.mapping.SqlRequestMapper;
 import ir.mohaymen.querygenerator.application.query.generate.common.model.Query;
 import ir.mohaymen.querygenerator.application.query.generate.common.model.SetOperator;
 import ir.mohaymen.querygenerator.domain.parameter.ParameterMode;
 import ir.mohaymen.querygenerator.domain.schema.enumeration.DisplayFormatting;
 import ir.mohaymen.querygenerator.domain.schema.enumeration.JoinType;
 import ir.mohaymen.querygenerator.domain.schema.enumeration.SortDirection;
-import ir.mohaymen.querygenerator.api.rest.dto.ColumnRequest;
-import ir.mohaymen.querygenerator.api.rest.dto.DeleteQueryRequest;
-import ir.mohaymen.querygenerator.api.rest.dto.InsertQueryRequest;
-import ir.mohaymen.querygenerator.api.rest.dto.JoinOnRequest;
-import ir.mohaymen.querygenerator.api.rest.dto.JoinRequest;
-import ir.mohaymen.querygenerator.api.rest.dto.OrderRequest;
-import ir.mohaymen.querygenerator.api.rest.dto.PredicateRequest;
-import ir.mohaymen.querygenerator.api.rest.dto.SelectQueryRequest;
-import ir.mohaymen.querygenerator.api.rest.dto.SetOperationRequest;
-import ir.mohaymen.querygenerator.api.rest.dto.TableRequest;
-import ir.mohaymen.querygenerator.api.rest.dto.UpdateQueryRequest;
+import ir.mohaymen.querygenerator.api.rest.common.dto.ColumnRequest;
+import ir.mohaymen.querygenerator.api.rest.common.dto.DeleteQueryRequest;
+import ir.mohaymen.querygenerator.api.rest.common.dto.InsertQueryRequest;
+import ir.mohaymen.querygenerator.api.rest.common.dto.JoinOnRequest;
+import ir.mohaymen.querygenerator.api.rest.common.dto.JoinRequest;
+import ir.mohaymen.querygenerator.api.rest.common.dto.OrderRequest;
+import ir.mohaymen.querygenerator.api.rest.common.dto.PredicateRequest;
+import ir.mohaymen.querygenerator.api.rest.common.dto.SelectQueryRequest;
+import ir.mohaymen.querygenerator.api.rest.common.dto.SetOperationRequest;
+import ir.mohaymen.querygenerator.api.rest.common.dto.TableRequest;
+import ir.mohaymen.querygenerator.api.rest.common.dto.UpdateQueryRequest;
 import org.junit.jupiter.api.Test;
 
 import java.util.LinkedHashMap;

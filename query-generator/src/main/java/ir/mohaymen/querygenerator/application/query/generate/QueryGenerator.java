@@ -1,6 +1,5 @@
 package ir.mohaymen.querygenerator.application.query.generate;
 
-import ir.mohaymen.querygenerator.application.query.generate.api.SqlStatement;
 import ir.mohaymen.querygenerator.application.query.generate.common.model.Query;
 import ir.mohaymen.querygenerator.application.query.generate.impl.QueryGeneratorRequestHandlerImpl;
 
@@ -20,10 +19,5 @@ public class QueryGenerator {
 
     public Query generate(QueryGeneratorRequest request) {
         return handler.generateQuery(request);
-    }
-
-    public Query generate(SqlStatement<?> statement) {
-        Objects.requireNonNull(statement, "statement must not be null");
-        return generate(statement.toRequest());
     }
 }
