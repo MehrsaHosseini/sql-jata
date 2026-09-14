@@ -61,10 +61,7 @@ public class OracleMultipleHavingCompilerImpl implements OracleMultipleHavingCom
         return new OracleHavingCondition(conditions.toString(), requiresWrapper);
     }
 
-    /**
-     * A nested OR only needs its own parentheses next to an AND, otherwise the parentheses of the
-     * enclosing operand already isolate it.
-     */
+
     private String member(String compiled, Having condition, boolean joinedByAnd) {
         return joinedByAnd && producesOr(condition)
                 ? GROUP_PREFIX + compiled + GROUP_SUFFIX

@@ -6,9 +6,7 @@ import ir.mohaymen.querygenerator.domain.parameter.ParameterMode;
 import java.util.Map;
 import java.util.Objects;
 
-/**
- * Holds the named parameter map of a single query, so an instance must not be shared between queries.
- */
+
 public class OracleParameterBinderImpl implements OracleParameterBinder {
 
     private static final String PLACEHOLDER_PREFIX = ":";

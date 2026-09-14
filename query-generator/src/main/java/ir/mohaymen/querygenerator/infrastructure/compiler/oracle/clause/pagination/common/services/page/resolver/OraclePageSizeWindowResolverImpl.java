@@ -3,9 +3,7 @@ package ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.paginat
 import ir.mohaymen.querygenerator.domain.limit_offset.Page_size;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.pagination.common.model.OraclePaginationWindow;
 
-/**
- * Resolves a zero based page number, so page zero is the first page and needs no offset at all.
- */
+
 public class OraclePageSizeWindowResolverImpl implements OraclePageSizeWindowResolver {
 
     private static final int FIRST_PAGE = 0;

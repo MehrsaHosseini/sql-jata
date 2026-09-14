@@ -5,9 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
-/**
- * Named bindings for {@code :name} placeholders, including caller-supplied raw SQL parameters.
- */
+
 public final class NamedParameters {
 
     private NamedParameters() {
