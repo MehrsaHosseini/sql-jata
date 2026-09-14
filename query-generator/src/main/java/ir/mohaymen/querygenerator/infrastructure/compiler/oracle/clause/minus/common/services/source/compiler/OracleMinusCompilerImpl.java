@@ -5,7 +5,7 @@ import ir.mohaymen.querygenerator.domain.minus.MinusDistinct;
 
 public class OracleMinusCompilerImpl implements OracleMinusCompiler {
 
-    private static final String MINUS_KEYWORD = "MINUS";
+    private static final String MINUS_KEYWORD = "MINUS ";
 
     @Override
     public String compile(Minus minus) {

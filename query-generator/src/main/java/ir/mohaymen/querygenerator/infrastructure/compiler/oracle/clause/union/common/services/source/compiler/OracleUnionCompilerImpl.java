@@ -6,8 +6,8 @@ import ir.mohaymen.querygenerator.domain.union.UnionDistinct;
 
 public class OracleUnionCompilerImpl implements OracleUnionCompiler {
 
-    private static final String UNION_ALL_KEYWORD = "UNION ALL";
-    private static final String UNION_KEYWORD = "UNION";
+    private static final String UNION_ALL_KEYWORD = "UNION ALL ";
+    private static final String UNION_KEYWORD = "UNION ";
 
     @Override
     public String compile(Union union) {

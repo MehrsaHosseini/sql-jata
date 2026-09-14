@@ -5,7 +5,7 @@ import ir.mohaymen.querygenerator.domain.intersect.IntersectDistinct;
 
 public class OracleIntersectCompilerImpl implements OracleIntersectCompiler {
 
-    private static final String INTERSECT_KEYWORD = "INTERSECT";
+    private static final String INTERSECT_KEYWORD = "INTERSECT ";
 
     @Override
     public String compile(Intersect intersect) {
