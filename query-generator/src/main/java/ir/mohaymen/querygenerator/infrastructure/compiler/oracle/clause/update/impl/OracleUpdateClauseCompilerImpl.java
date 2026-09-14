@@ -33,7 +33,7 @@ public class OracleUpdateClauseCompilerImpl implements OracleUpdateClauseCompile
             throw new IllegalArgumentException("update must not be null");
         }
 
-        OracleParameterBinder parameterBinder = new OracleParameterBinderImpl(context.parameters());
+        OracleParameterBinder parameterBinder = new OracleParameterBinderImpl(context.parameters(), context.parameterMode());
         String clause = updateSourceCompiler.compile(update, parameterBinder);
 
         StringBuilder query = context.query();

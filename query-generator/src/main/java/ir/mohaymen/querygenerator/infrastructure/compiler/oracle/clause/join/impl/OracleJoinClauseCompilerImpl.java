@@ -4,6 +4,8 @@ import ir.mohaymen.querygenerator.application.query.generate.common.model.QueryC
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.join.OracleJoinClauseCompiler;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.join.common.services.source.compiler.OracleJoinSourceCompiler;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.join.common.services.source.compiler.OracleJoinSourceCompilerImpl;
+import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.parameter.OracleParameterBinder;
+import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.parameter.OracleParameterBinderImpl;
 
 import java.util.Objects;
 
@@ -25,7 +27,8 @@ public class OracleJoinClauseCompilerImpl implements OracleJoinClauseCompiler {
     public QueryContext generateJoinClause(QueryContext context) {
         Objects.requireNonNull(context, "query context must not be null");
 
-        String clause = joinSourceCompiler.compile(context.join());
+        OracleParameterBinder parameterBinder = new OracleParameterBinderImpl(context.parameters(), context.parameterMode());
+        String clause = joinSourceCompiler.compile(context.join(), parameterBinder);
         if (clause.isEmpty()) {
             return context;
         }

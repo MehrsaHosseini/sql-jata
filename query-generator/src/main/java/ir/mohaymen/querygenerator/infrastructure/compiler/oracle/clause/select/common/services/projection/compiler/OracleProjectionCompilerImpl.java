@@ -6,6 +6,7 @@ import ir.mohaymen.querygenerator.domain.select.SelectColumn;
 import ir.mohaymen.querygenerator.domain.select.SelectRaw;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.select.common.services.item.compiler.OracleSelectItemCompiler;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.select.common.services.item.compiler.OracleSelectItemCompilerImpl;
+import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.parameter.OracleParameterBinder;
 
 import java.util.List;
 import java.util.Objects;
@@ -27,19 +28,22 @@ public class OracleProjectionCompilerImpl implements OracleProjectionCompiler {
     }
 
     @Override
-    public String compile(Select select) {
+    public String compile(Select select, OracleParameterBinder parameterBinder) {
+        Objects.requireNonNull(parameterBinder, "parameter binder must not be null");
         return switch (select) {
             case null -> ALL_COLUMNS;
-            case SelectRaw selectRaw -> compileRaw(selectRaw.raw());
+            case SelectRaw selectRaw -> compileRaw(selectRaw, parameterBinder);
             case SelectColumn selectColumn -> compileColumns(selectColumn.columnList());
         };
     }
 
-    private static String compileRaw(String raw) {
+    private static String compileRaw(SelectRaw selectRaw, OracleParameterBinder parameterBinder) {
+        String raw = selectRaw.raw();
         if (raw == null || raw.isBlank()) {
             throw new IllegalArgumentException("raw select expression must not be null or blank");
         }
-        return raw.trim();
+        parameterBinder.putAll(selectRaw.parameters());
+        return parameterBinder.renderSql(raw.trim());
     }
 
     private String compileColumns(List<Column> columnList) {

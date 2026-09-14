@@ -33,7 +33,7 @@ public class OracleInsertClauseCompilerImpl implements OracleInsertClauseCompile
             throw new IllegalArgumentException("insert must not be null");
         }
 
-        OracleParameterBinder parameterBinder = new OracleParameterBinderImpl(context.parameters());
+        OracleParameterBinder parameterBinder = new OracleParameterBinderImpl(context.parameters(), context.parameterMode());
         String clause = insertSourceCompiler.compile(insert, parameterBinder);
 
         StringBuilder query = context.query();

@@ -5,6 +5,8 @@ import ir.mohaymen.querygenerator.domain.group.GroupBy;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.group_by.OracleGroupByClauseCompiler;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.group_by.common.services.grouping.compiler.OracleGroupingCompiler;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.group_by.common.services.grouping.compiler.OracleGroupingCompilerImpl;
+import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.parameter.OracleParameterBinder;
+import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.parameter.OracleParameterBinderImpl;
 
 import java.util.Objects;
 
@@ -32,7 +34,8 @@ public class OracleGroupByClauseCompilerImpl implements OracleGroupByClauseCompi
             return context;
         }
 
-        String grouping = groupingCompiler.compile(groupBy);
+        OracleParameterBinder parameterBinder = new OracleParameterBinderImpl(context.parameters(), context.parameterMode());
+        String grouping = groupingCompiler.compile(groupBy, parameterBinder);
 
         StringBuilder query = context.query();
         if (!query.isEmpty()) {

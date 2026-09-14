@@ -4,6 +4,8 @@ import ir.mohaymen.querygenerator.application.query.generate.common.model.QueryC
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.select.OracleSelectClauseCompiler;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.select.common.services.projection.compiler.OracleProjectionCompiler;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.select.common.services.projection.compiler.OracleProjectionCompilerImpl;
+import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.parameter.OracleParameterBinder;
+import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.parameter.OracleParameterBinderImpl;
 
 import java.util.Objects;
 
@@ -25,7 +27,8 @@ public class OracleSelectClauseCompilerImpl implements OracleSelectClauseCompile
     public QueryContext generateSelectClause(QueryContext context) {
         Objects.requireNonNull(context, "query context must not be null");
 
-        context.query().append(SELECT_KEYWORD).append(projectionCompiler.compile(context.select()));
+        OracleParameterBinder parameterBinder = new OracleParameterBinderImpl(context.parameters(), context.parameterMode());
+        context.query().append(SELECT_KEYWORD).append(projectionCompiler.compile(context.select(), parameterBinder));
         return context;
     }
 

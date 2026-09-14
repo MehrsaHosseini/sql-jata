@@ -62,7 +62,7 @@ public class OracleConditionCompilerImpl implements OracleConditionCompiler {
 
         return switch (where) {
             case null -> throw new IllegalArgumentException("condition must not be null");
-            case WhereRaw whereRaw -> compileRaw(whereRaw.raw());
+            case WhereRaw whereRaw -> compileRaw(whereRaw, parameterBinder);
             case BasicWhere basicWhere -> basicConditionCompiler.compile(basicWhere, parameterBinder);
             case WhereDatePart whereDatePart -> datePartConditionCompiler.compile(whereDatePart, parameterBinder);
             case WhereNull whereNull -> nullConditionCompiler.compile(whereNull);
@@ -72,11 +72,13 @@ public class OracleConditionCompilerImpl implements OracleConditionCompiler {
         };
     }
 
-    private static String compileRaw(String raw) {
+    private static String compileRaw(WhereRaw whereRaw, OracleParameterBinder parameterBinder) {
+        String raw = whereRaw.raw();
         if (raw == null || raw.isBlank()) {
             throw new IllegalArgumentException("raw condition must not be null or blank");
         }
-        return raw.trim();
+        parameterBinder.putAll(whereRaw.parameters());
+        return parameterBinder.renderSql(raw.trim());
     }
 
 }

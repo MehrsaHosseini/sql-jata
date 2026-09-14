@@ -34,7 +34,7 @@ public class OracleWhereClauseCompilerImpl implements OracleWhereClauseCompiler 
             return context;
         }
 
-        OracleParameterBinder parameterBinder = new OracleParameterBinderImpl(context.parameters());
+        OracleParameterBinder parameterBinder = new OracleParameterBinderImpl(context.parameters(), context.parameterMode());
         String condition = conditionCompiler.compile(where, parameterBinder);
 
         StringBuilder query = context.query();

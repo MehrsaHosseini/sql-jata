@@ -5,6 +5,8 @@ import ir.mohaymen.querygenerator.domain.order.OrderBy;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.order_by.OracleOrderByClauseCompiler;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.order_by.common.services.ordering.compiler.OracleOrderingCompiler;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.order_by.common.services.ordering.compiler.OracleOrderingCompilerImpl;
+import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.parameter.OracleParameterBinder;
+import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.parameter.OracleParameterBinderImpl;
 
 import java.util.Objects;
 
@@ -32,7 +34,8 @@ public class OracleOrderByClauseCompilerImpl implements OracleOrderByClauseCompi
             return context;
         }
 
-        String ordering = orderingCompiler.compile(orderBy);
+        OracleParameterBinder parameterBinder = new OracleParameterBinderImpl(context.parameters(), context.parameterMode());
+        String ordering = orderingCompiler.compile(orderBy, parameterBinder);
 
         StringBuilder query = context.query();
         if (!query.isEmpty()) {

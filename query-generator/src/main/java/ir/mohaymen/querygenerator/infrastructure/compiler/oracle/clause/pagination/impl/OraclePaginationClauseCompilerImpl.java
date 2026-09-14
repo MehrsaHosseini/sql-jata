@@ -38,7 +38,7 @@ public class OraclePaginationClauseCompilerImpl implements OraclePaginationClaus
             return context;
         }
 
-        OracleParameterBinder parameterBinder = new OracleParameterBinderImpl(context.parameters());
+        OracleParameterBinder parameterBinder = new OracleParameterBinderImpl(context.parameters(), context.parameterMode());
         String clause = rowLimitingClauseCompiler.compile(window, parameterBinder);
 
         StringBuilder query = context.query();

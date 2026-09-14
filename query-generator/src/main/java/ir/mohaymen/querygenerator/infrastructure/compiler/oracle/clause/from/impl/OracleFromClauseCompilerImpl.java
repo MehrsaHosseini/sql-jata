@@ -4,6 +4,8 @@ import ir.mohaymen.querygenerator.application.query.generate.common.model.QueryC
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.from.OracleFromClauseCompiler;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.from.common.services.source.compiler.OracleFromSourceCompiler;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.clause.from.common.services.source.compiler.OracleFromSourceCompilerImpl;
+import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.parameter.OracleParameterBinder;
+import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.common.parameter.OracleParameterBinderImpl;
 
 import java.util.Objects;
 
@@ -30,7 +32,8 @@ public class OracleFromClauseCompilerImpl implements OracleFromClauseCompiler {
         if (!query.isEmpty()) {
             query.append(CLAUSE_SEPARATOR);
         }
-        query.append(FROM_KEYWORD).append(fromSourceCompiler.compile(context.from()));
+        OracleParameterBinder parameterBinder = new OracleParameterBinderImpl(context.parameters(), context.parameterMode());
+        query.append(FROM_KEYWORD).append(fromSourceCompiler.compile(context.from(), parameterBinder));
         return context;
     }
 

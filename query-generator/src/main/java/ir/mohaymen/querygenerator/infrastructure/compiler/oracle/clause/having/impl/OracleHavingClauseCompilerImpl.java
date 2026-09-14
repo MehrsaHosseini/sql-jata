@@ -40,7 +40,7 @@ public class OracleHavingClauseCompilerImpl implements OracleHavingClauseCompile
             return context;
         }
 
-        OracleParameterBinder parameterBinder = new OracleParameterBinderImpl(context.parameters());
+        OracleParameterBinder parameterBinder = new OracleParameterBinderImpl(context.parameters(), context.parameterMode());
         OracleHavingCondition condition = havingConditionCompiler.compile(having, parameterBinder);
 
         StringBuilder query = context.query();

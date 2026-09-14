@@ -37,18 +37,20 @@ public class OracleHavingConditionCompilerImpl implements OracleHavingConditionC
 
         return switch (having) {
             case null -> throw new IllegalArgumentException("having condition must not be null");
-            case HavingRaw havingRaw -> new OracleHavingCondition(compileRaw(havingRaw.raw()), IN_PLACE);
+            case HavingRaw havingRaw -> new OracleHavingCondition(compileRaw(havingRaw, parameterBinder), IN_PLACE);
             case HavingCondition havingCondition ->
                     new OracleHavingCondition(aliasConditionCompiler.compile(havingCondition, parameterBinder), WRAPPED);
             case MultipleHaving multipleHaving -> multipleHavingCompiler.compile(multipleHaving, this, parameterBinder);
         };
     }
 
-    private static String compileRaw(String raw) {
+    private static String compileRaw(HavingRaw havingRaw, OracleParameterBinder parameterBinder) {
+        String raw = havingRaw.raw();
         if (raw == null || raw.isBlank()) {
             throw new IllegalArgumentException("raw having condition must not be null or blank");
         }
-        return raw.trim();
+        parameterBinder.putAll(havingRaw.parameters());
+        return parameterBinder.renderSql(raw.trim());
     }
 
 }
