@@ -1,13 +1,13 @@
 package ir.mohaymen.querygenerator.api.public_interface;
 
 import ir.mohaymen.querygenerator.api.public_interface.impl.QueryGeneratorFacadeImpl;
-import ir.mohaymen.querygenerator.api.rest.common.dto.DeleteQueryRequest;
-import ir.mohaymen.querygenerator.api.rest.common.dto.InsertAllQueryRequest;
-import ir.mohaymen.querygenerator.api.rest.common.dto.InsertQueryRequest;
-import ir.mohaymen.querygenerator.api.rest.common.dto.QueryResponse;
-import ir.mohaymen.querygenerator.api.rest.common.dto.SelectQueryRequest;
-import ir.mohaymen.querygenerator.api.rest.common.dto.UpdateQueryRequest;
-import ir.mohaymen.querygenerator.api.rest.common.mapping.SqlRequestMapper;
+import ir.mohaymen.querygenerator.api.common.dto.DeleteQueryRequest;
+import ir.mohaymen.querygenerator.api.common.dto.InsertAllQueryRequest;
+import ir.mohaymen.querygenerator.api.common.dto.InsertQueryRequest;
+import ir.mohaymen.querygenerator.api.common.dto.QueryResponse;
+import ir.mohaymen.querygenerator.api.common.dto.SelectQueryRequest;
+import ir.mohaymen.querygenerator.api.common.dto.UpdateQueryRequest;
+import ir.mohaymen.querygenerator.api.common.mapping.SqlRequestMapper;
 import ir.mohaymen.querygenerator.application.query.builder.SqlStatement;
 import ir.mohaymen.querygenerator.application.query.generate.QueryGenerator;
 

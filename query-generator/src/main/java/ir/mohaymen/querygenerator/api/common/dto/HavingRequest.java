@@ -1,4 +1,4 @@
-package ir.mohaymen.querygenerator.api.rest.common.dto;
+package ir.mohaymen.querygenerator.api.common.dto;
 
 import java.util.List;
 import java.util.Map;

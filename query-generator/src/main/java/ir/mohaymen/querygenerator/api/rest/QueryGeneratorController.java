@@ -1,13 +1,13 @@
 package ir.mohaymen.querygenerator.api.rest;
 
 import ir.mohaymen.querygenerator.application.query.generate.QueryGenerator;
-import ir.mohaymen.querygenerator.api.rest.common.dto.DeleteQueryRequest;
-import ir.mohaymen.querygenerator.api.rest.common.dto.InsertAllQueryRequest;
-import ir.mohaymen.querygenerator.api.rest.common.dto.InsertQueryRequest;
-import ir.mohaymen.querygenerator.api.rest.common.dto.QueryResponse;
-import ir.mohaymen.querygenerator.api.rest.common.dto.SelectQueryRequest;
-import ir.mohaymen.querygenerator.api.rest.common.dto.UpdateQueryRequest;
-import ir.mohaymen.querygenerator.api.rest.common.mapping.SqlRequestMapper;
+import ir.mohaymen.querygenerator.api.common.dto.DeleteQueryRequest;
+import ir.mohaymen.querygenerator.api.common.dto.InsertAllQueryRequest;
+import ir.mohaymen.querygenerator.api.common.dto.InsertQueryRequest;
+import ir.mohaymen.querygenerator.api.common.dto.QueryResponse;
+import ir.mohaymen.querygenerator.api.common.dto.SelectQueryRequest;
+import ir.mohaymen.querygenerator.api.common.dto.UpdateQueryRequest;
+import ir.mohaymen.querygenerator.api.common.mapping.SqlRequestMapper;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

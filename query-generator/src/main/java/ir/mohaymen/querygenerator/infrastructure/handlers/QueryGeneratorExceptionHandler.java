@@ -1,6 +1,6 @@
 package ir.mohaymen.querygenerator.infrastructure.handlers;
 
-import ir.mohaymen.querygenerator.api.rest.common.dto.ApiError;
+import ir.mohaymen.querygenerator.api.common.dto.ApiError;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;

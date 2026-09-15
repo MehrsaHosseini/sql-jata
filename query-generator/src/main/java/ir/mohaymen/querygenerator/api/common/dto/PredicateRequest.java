@@ -1,4 +1,4 @@
-package ir.mohaymen.querygenerator.api.rest.common.dto;
+package ir.mohaymen.querygenerator.api.common.dto;
 
 import ir.mohaymen.querygenerator.domain.schema.enumeration.DatePart;
 

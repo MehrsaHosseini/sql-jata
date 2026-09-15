@@ -7,11 +7,9 @@ import java.util.Objects;
 public class OracleDatePartExpressionCompilerImpl implements OracleDatePartExpressionCompiler {
 
     private static final String TRUNCATED_DATE = "TRUNC(%s)";
-    // a zero padded 24 hour clock keeps the order of time, so a range of time stays a single comparison
     private static final String FORMATTED_TIME = "TO_CHAR(%s, 'HH24:MI')";
     private static final String FORMATTED_TIME_WITH_SECONDS = "TO_CHAR(%s, 'HH24:MI:SS')";
     private static final String EXTRACTED_PART = "EXTRACT(%s FROM %s)";
-    // oracle refuses to extract a time part from a DATE column, so the column becomes a timestamp first
     private static final String EXTRACTED_TIME_PART = "EXTRACT(%s FROM CAST(%s AS TIMESTAMP))";
 
     @Override
