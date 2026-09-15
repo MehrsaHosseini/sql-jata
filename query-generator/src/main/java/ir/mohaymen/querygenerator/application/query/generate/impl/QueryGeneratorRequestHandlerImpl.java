@@ -14,7 +14,8 @@ import ir.mohaymen.querygenerator.domain.union.Union;
 import ir.mohaymen.querygenerator.domain.union.UnionAll;
 import ir.mohaymen.querygenerator.domain.union.UnionDistinct;
 import ir.mohaymen.querygenerator.infrastructure.compiler.QueryCompiler;
-import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.OracleQueryCompiler;
+import ir.mohaymen.querygenerator.infrastructure.compiler.QueryCompilerDialect;
+import ir.mohaymen.querygenerator.infrastructure.compiler.QueryCompilerFactory;
 
 import java.util.List;
 import java.util.Objects;
@@ -24,7 +25,7 @@ public class QueryGeneratorRequestHandlerImpl implements QueryGeneratorRequestHa
     private final QueryCompiler compiler;
 
     public QueryGeneratorRequestHandlerImpl() {
-        this(new OracleQueryCompiler());
+        this(QueryCompilerFactory.create(QueryCompilerDialect.ORACLE));
     }
 
     public QueryGeneratorRequestHandlerImpl(QueryCompiler compiler) {
