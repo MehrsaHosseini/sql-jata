@@ -10,11 +10,16 @@ import ir.mohaymen.querygenerator.api.common.dto.UpdateQueryRequest;
 import ir.mohaymen.querygenerator.api.common.mapping.SqlRequestMapper;
 import ir.mohaymen.querygenerator.application.query.builder.SqlStatement;
 import ir.mohaymen.querygenerator.application.query.generate.QueryGenerator;
+import ir.mohaymen.querygenerator.infrastructure.compiler.QueryCompilerDialect;
 
 public interface QueryGeneratorFacade {
 
     static QueryGeneratorFacade oracle() {
-        return new QueryGeneratorFacadeImpl(QueryGenerator.oracle(), new SqlRequestMapper());
+        return of(QueryCompilerDialect.ORACLE);
+    }
+
+    static QueryGeneratorFacade of(QueryCompilerDialect dialect) {
+        return new QueryGeneratorFacadeImpl(QueryGenerator.of(dialect), new SqlRequestMapper());
     }
 
     QueryResponse select(SelectQueryRequest request);

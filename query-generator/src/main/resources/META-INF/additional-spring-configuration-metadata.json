@@ -1,0 +1,21 @@
+{
+  "properties": [
+    {
+      "name": "query-generator.compiler",
+      "type": "ir.mohaymen.querygenerator.infrastructure.compiler.QueryCompilerDialect",
+      "description": "Query compiler dialect used to generate statements.",
+      "defaultValue": "ORACLE"
+    }
+  ],
+  "hints": [
+    {
+      "name": "query-generator.compiler",
+      "values": [
+        { "value": "ORACLE", "description": "Oracle SQL compiler." },
+        { "value": "STARROCKS", "description": "StarRocks compiler (not implemented yet)." },
+        { "value": "SQL_SERVER", "description": "SQL Server compiler (not implemented yet)." },
+        { "value": "MONGODB", "description": "MongoDB compiler (not implemented yet)." }
+      ]
+    }
+  ]
+}
