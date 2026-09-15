@@ -16,6 +16,7 @@ import ir.mohaymen.querygenerator.domain.union.UnionDistinct;
 import ir.mohaymen.querygenerator.infrastructure.compiler.QueryCompiler;
 import ir.mohaymen.querygenerator.infrastructure.compiler.oracle.OracleQueryCompiler;
 
+import java.util.List;
 import java.util.Objects;
 
 public class QueryGeneratorRequestHandlerImpl implements QueryGeneratorRequestHandler {
@@ -50,14 +51,30 @@ public class QueryGeneratorRequestHandlerImpl implements QueryGeneratorRequestHa
 
     private Query compileSelect(QueryContext context, QueryGeneratorRequest request) {
         compileSelectBody(context);
-        for (QuerySetOperation setOperation : request.setOperations()) {
-            applySetOperator(context, setOperation.operator());
-            compileSelectBody(setOperation.queryContext()
-                    .asSelectBody(context.query(), context.parameters(), context.parameterMode()));
-        }
+        compileSetOperations(context, request.setOperations());
         compiler.generateOrderBy(context);
         compiler.generatePagination(context);
         return toQuery(context);
+    }
+
+    private void compileSetOperations(QueryContext shared, List<QuerySetOperation> setOperations) {
+        for (QuerySetOperation setOperation : setOperations) {
+            applySetOperator(shared, setOperation.operator());
+            compileSetOperand(shared, setOperation);
+        }
+    }
+
+    private void compileSetOperand(QueryContext shared, QuerySetOperation operand) {
+        boolean grouped = !operand.setOperations().isEmpty();
+        if (grouped) {
+            shared.query().append("(");
+        }
+        compileSelectBody(operand.queryContext()
+                .asSelectBody(shared.query(), shared.parameters(), shared.parameterMode()));
+        compileSetOperations(shared, operand.setOperations());
+        if (grouped) {
+            shared.query().append(")");
+        }
     }
 
     private void compileSelectBody(QueryContext context) {

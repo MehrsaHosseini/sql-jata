@@ -262,7 +262,8 @@ public final class SelectQuery extends SqlStatement<SelectQuery> {
     private SelectQuery addSetOperation(SetOperator operator, SelectQuery other) {
         flushJoin();
         Objects.requireNonNull(other, "set operand must not be null");
-        setOperations.add(new QuerySetOperation(operator, other.toContext()));
+        QueryGeneratorRequest right = other.toRequest();
+        setOperations.add(new QuerySetOperation(operator, right.queryContext(), right.setOperations()));
         return this;
     }
 
