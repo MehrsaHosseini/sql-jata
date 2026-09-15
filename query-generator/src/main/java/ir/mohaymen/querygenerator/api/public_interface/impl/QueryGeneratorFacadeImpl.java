@@ -1,6 +1,6 @@
-package ir.mohaymen.querygenerator.api.facade.impl;
+package ir.mohaymen.querygenerator.api.public_interface.impl;
 
-import ir.mohaymen.querygenerator.api.facade.QueryGeneratorFacade;
+import ir.mohaymen.querygenerator.api.public_interface.QueryGeneratorFacade;
 import ir.mohaymen.querygenerator.api.rest.common.dto.DeleteQueryRequest;
 import ir.mohaymen.querygenerator.api.rest.common.dto.InsertAllQueryRequest;
 import ir.mohaymen.querygenerator.api.rest.common.dto.InsertQueryRequest;

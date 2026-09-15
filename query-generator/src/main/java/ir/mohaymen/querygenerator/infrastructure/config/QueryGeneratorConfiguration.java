@@ -1,7 +1,7 @@
 package ir.mohaymen.querygenerator.infrastructure.config;
 
-import ir.mohaymen.querygenerator.api.facade.QueryGeneratorFacade;
-import ir.mohaymen.querygenerator.api.facade.impl.QueryGeneratorFacadeImpl;
+import ir.mohaymen.querygenerator.api.public_interface.QueryGeneratorFacade;
+import ir.mohaymen.querygenerator.api.public_interface.impl.QueryGeneratorFacadeImpl;
 import ir.mohaymen.querygenerator.api.rest.common.mapping.SqlRequestMapper;
 import ir.mohaymen.querygenerator.application.query.generate.QueryGenerator;
 import org.springframework.context.annotation.Bean;
