@@ -119,6 +119,72 @@ class SqlRequestMapperTest {
     }
 
     @Test
+    void nestedSetOperationsAreRetained() {
+        SelectQueryRequest innerRight = new SelectQueryRequest(
+                List.of(new ColumnRequest("ID")),
+                null,
+                new TableRequest("C"),
+                null, null, null, null, null, null, null, null,
+                null, null, null, null, null, null, null
+        );
+        SelectQueryRequest right = new SelectQueryRequest(
+                List.of(new ColumnRequest("ID")),
+                null,
+                new TableRequest("B"),
+                null, null, null, null, null, null, null, null,
+                null, null, null, null,
+                List.of(new SetOperationRequest(SetOperator.UNION, innerRight)),
+                null,
+                null
+        );
+        SelectQueryRequest request = new SelectQueryRequest(
+                List.of(new ColumnRequest("ID")),
+                null,
+                new TableRequest("A"),
+                null, null, null, null, null, null, null, null,
+                null, null, null, null,
+                List.of(new SetOperationRequest(SetOperator.UNION, right)),
+                null,
+                null
+        );
+
+        Query query = mapper.toSelect(request).generate();
+        assertEquals(
+                "SELECT \"ID\" FROM \"A\" UNION (SELECT \"ID\" FROM \"B\" UNION SELECT \"ID\" FROM \"C\")",
+                query.query());
+    }
+
+    @Test
+    void setOperandBindIsPreserved() {
+        SelectQueryRequest request = new SelectQueryRequest(
+                List.of(new ColumnRequest("ID")),
+                null,
+                new TableRequest("A"),
+                null, null, null, null, null, null, null, null,
+                null, null, null, null,
+                List.of(new SetOperationRequest(
+                        SetOperator.UNION,
+                        new SelectQueryRequest(
+                                List.of(new ColumnRequest("ID")),
+                                null,
+                                new TableRequest("B"),
+                                null, null,
+                                PredicateRequest.raw("X = :x", Map.of()),
+                                null, null, null, null, null,
+                                null, null, null, null, null, null,
+                                Map.of("x", 7)
+                        )
+                )),
+                null,
+                null
+        );
+
+        Query query = mapper.toSelect(request).generate();
+        assertEquals("SELECT \"ID\" FROM \"A\" UNION SELECT \"ID\" FROM \"B\" WHERE X = :x", query.query());
+        assertEquals(7, query.parameters().get("x"));
+    }
+
+    @Test
     void insertUpdateAndDelete() {
         Query insert = mapper.toInsert(new InsertQueryRequest(
                 "EMPLOYEE",

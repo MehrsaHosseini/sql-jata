@@ -12,6 +12,7 @@ import static ir.mohaymen.querygenerator.application.query.builder.Sql.desc;
 import static ir.mohaymen.querygenerator.application.query.builder.Sql.eq;
 import static ir.mohaymen.querygenerator.application.query.builder.Sql.isNull;
 import static ir.mohaymen.querygenerator.application.query.builder.Sql.jalali;
+import static ir.mohaymen.querygenerator.application.query.builder.Sql.raw;
 import static ir.mohaymen.querygenerator.application.query.builder.Sql.select;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -110,5 +111,44 @@ class QueryBuilderTest {
     void joinWithoutOnFailsEarly() {
         SelectQuery query = select().from("EMPLOYEE", "E").innerJoin("DEPT", "D");
         assertThrows(IllegalStateException.class, query::generate);
+    }
+
+    @Test
+    void nestedUnionKeepsRightOperandSetOperations() {
+        Query query = select("ID").from("A")
+                .union(select("ID").from("B").union(select("ID").from("C")))
+                .generate();
+
+        assertEquals(
+                "SELECT \"ID\" FROM \"A\" UNION (SELECT \"ID\" FROM \"B\" UNION SELECT \"ID\" FROM \"C\")",
+                query.query());
+    }
+
+    @Test
+    void nestedUnionInsideIntersectKeepsGrouping() {
+        Query query = select("ID").from("A")
+                .intersect(select("ID").from("B").union(select("ID").from("C")))
+                .generate();
+
+        assertEquals(
+                "SELECT \"ID\" FROM \"A\" INTERSECT (SELECT \"ID\" FROM \"B\" UNION SELECT \"ID\" FROM \"C\")",
+                query.query());
+    }
+
+    @Test
+    void unionPreservesOperandBindings() {
+        Query query = select("ID").from("A")
+                .union(select("ID").from("B").where(raw("X = :x")).bind("x", 7))
+                .generate();
+
+        assertEquals("SELECT \"ID\" FROM \"A\" UNION SELECT \"ID\" FROM \"B\" WHERE X = :x", query.query());
+        assertEquals(7, query.parameters().get("x"));
+    }
+
+    @Test
+    void unionRejectsConflictingOperandBindings() {
+        SelectQuery query = select("ID").from("A").bind("x", 1)
+                .union(select("ID").from("B").where(raw("X = :x")).bind("x", 7));
+        assertThrows(IllegalArgumentException.class, query::generate);
     }
 }
